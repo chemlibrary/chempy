@@ -1,0 +1,12 @@
+pyproject.toml
+setup.py
+chempy.egg-info/PKG-INFO
+chempy.egg-info/SOURCES.txt
+chempy.egg-info/dependency_links.txt
+chempy.egg-info/top_level.txt
+tests/__init__.py
+tests/test_files.py
+tests/test_find.py
+tests/test_librarian.py
+tests/test_lumberjack.py
+tests/test_primitives.py
