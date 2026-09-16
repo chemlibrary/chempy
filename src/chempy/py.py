@@ -18,6 +18,42 @@ import os
 from chempy.files import parent_path, file_name, file_extension, file_safe_write
 
 
+def create_package_toml(package_name:str, target_dir:str = None, description:str = "", author:str = "", email:str = "", license:str = "GPL-3.0-or-later", homepage:str = ""):
+    if target_dir == None:
+        target_dir = f".{os.sep}"
+    contents = f"""[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "{package_name}"
+version = "2.1.6"
+authors = [
+  {{ name="{author}", email="{email}" }},
+]
+description = "{description}"
+readme = "README.md"
+requires-python = ">=3.9"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+]
+license = "{license}"
+license-files = ["LICEN[CS]E*"]
+
+[project.urls]
+Homepage = "{homepage}"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+"""
+    try:
+        return file_safe_write(f"{target_dir}{os.sep}pyproject.toml", contents = contents)
+    except:
+        return False
+
+
 def detect_indentation(path:str) -> int:
     try:
         with open(path, 'r') as file:
@@ -44,70 +80,5 @@ def detect_indentation(path:str) -> int:
         print(f"An error occurred: {e}")
     return None
 
-
-def sort_methods(path:str) -> bool:
-    try:
-        indent_size = detect_indentation(path)
-    except:
-        return False
-
-    try:
-        with open(path, 'r') as file:
-            lines = file.readlines()
-        current_block = []
-        blocks = []
-        imports = []
-        top_level = []
-        commented = []
-        open_comment = False
-        for line in lines:
-            indent = len(line) - len(line.lstrip())
-            if indent == 0 and line != '':
-                ## Handle multiline comments with zero indent
-                if line[:3] == '"""' or (line[:3] == "'''" or line[:3] == '```'):
-                    if open_comment:
-                        current_block.append(line)
-                        commented.append(''.join(current_block))
-                        current_block = []
-                        open_comment = not(open_comment)
-                    elif len(current_block) > 0:
-                        blocks.append(''.join(current_block))
-                        current_block = [line]
-                        open_comment = not(open_comment)
-                ## Handle multiline comment contents
-                elif open_comment:
-                    current_block.append(line)
-                else:
-                    if line[0] == '#':
-                        continue
-                    ## Handle imports
-                    elif (line[:4] == 'from' or line[:6] == 'import'):
-                        blocks.append(''.join(current_block))
-                        current_block = []
-                        imports.append(line)
-                    ## Handle classes and methods
-                    elif line[:3] != 'def' or line[:4] != 'class':
-                        current_block.append(line)
-                        top_level.append(''.join(current_block))
-                        current_block = []
-                    else:
-                        blocks.append(''.join(current_block))
-                        current_block = [line]
-            else:
-                current_block.append(line)
-        if len(current_block) > 0:
-            blocks.append(''.join(current_block))
-
-        sorted_lines = imports + top_level + sorted(blocks) + commented
-        sorted_contents = ''.join(sorted_lines)
-
-        path = f'{parent_path(path)}{os.sep}{file_name(path, include_extension = False)}-sorted{file_extension(path)}'
-        if file_safe_write(path, sorted_contents):
-            return True
-        return False
-    except FileNotFoundError:
-        print("The specified file does not exist.")
-        return False
-    except Exception as e:
-        print(f"An error occurred: {e}")
-        return False
+if __name__ == '__main__':
+    print(create_package_toml('test-package','/home/user/Desktop','test description','test author', 'test@email.com',))

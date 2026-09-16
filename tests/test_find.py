@@ -36,7 +36,7 @@ def test_find_numbers_in_file_by_length():
 
 def test_find_numbers_in_string_by_length():
     # Test finding 3-digit numbers in a string
-    test_string = 'abc123def456ghi789jkl'
+    test_string = 'ab00c123def456ghi789jkl'
     results = find_numbers_in_string_by_length(3, test_string)
     assert results == ['123', '456', '789']
 
