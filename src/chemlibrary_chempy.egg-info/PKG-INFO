@@ -1,0 +1,32 @@
+Metadata-Version: 2.4
+Name: chemlibrary-chempy
+Version: 2.1.6
+Summary: Chems Python Library.
+Author-email: Chem <codechem@proton.me>
+License-Expression: GPL-3.0-or-later
+Project-URL: Homepage, https://github.com/chemlibrary/chempy
+Classifier: Programming Language :: Python :: 3
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.9
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Dynamic: license-file
+
+# ChemPy by Chem
+## Description
+ChemPy is a python framework for developers that is human readable and intuitive. It simplifies and accelerates development by providing highly functional, standardized building blocks so that you can focus on what makes your project unique. The classes and methods all follow a standardized convention, allowing you to spend less time reading documentation.
+## Styling and Conventions
+- Single quotes ('') are used first, and double quotes ("") are used inside of single quotes. The reason for this is many languages use single quotes for character literals, and double quotes for string literals. This makes escaping easier when creating strings that will be interpreted by other languages.
+### Source Comments:
+```
+#   -> functional code that has been temporarily disabled.
+##  -> code comments that should be included in production.
+### -> psuedocode, notes, todo items, etc.; should be removed before production.
+```
+### Import String Delimiters:
+```
+|:|
+```
+
+### Commits:
+Commits will list the changes made and to what file/object they are made if the commit is a finished product. For work-in-progress changes, the commit will be the date and commit number for that date in the format {YYYMMDD###}.

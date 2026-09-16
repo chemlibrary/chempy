@@ -1,0 +1,16 @@
+Metadata-Version: 2.4
+Name: chemlibrary-chempy
+Version: 2.1.4
+Summary: Chems Python Library.
+Author: Chem
+Author-email: Chem <codechem@proton.me>
+License-Expression: GPL-3.0-or-later
+Project-URL: Homepage, https://github.com/chemlibrary/chempy
+Classifier: Programming Language :: Python :: 3
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Dynamic: author
+Dynamic: license-file
+Dynamic: requires-python

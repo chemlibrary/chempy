@@ -1,0 +1,11 @@
+LICENSE
+pyproject.toml
+setup.py
+chemlibrary_chempy.egg-info/PKG-INFO
+chemlibrary_chempy.egg-info/SOURCES.txt
+chemlibrary_chempy.egg-info/dependency_links.txt
+chemlibrary_chempy.egg-info/top_level.txt
+tests/__init__.py
+tests/test_files.py
+tests/test_find.py
+tests/test_primitives.py
