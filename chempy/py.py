@@ -1,5 +1,6 @@
 import os
-from .files import parent_path, file_name, file_extension, file_safe_write
+from chempy import files
+#from chempy.files import parent_path, file_name, file_extension, file_safe_write
 
 
 def detect_indentation(path:str) -> int:

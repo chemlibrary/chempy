@@ -3,7 +3,7 @@ import tempfile
 import pytest
 from pathlib import Path
 
-from ..files import (
+from chempy.files import (
     clean_path, is_child_of_dir, file_read, file_read_lines, file_write,
     file_append, file_exists, file_delete, file_safe_write, file_size,
     dir_size, human_size, unixfy_file_seps, file_name, file_extension,

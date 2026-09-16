@@ -1,10 +1,12 @@
 import pytest
+import os
 
-from ..find import find_in_file, find_numbers_in_file_by_length, find_numbers_in_string_by_length
+from chempy.find import find_in_file, find_numbers_in_file_by_length, find_numbers_in_string_by_length
+from chempy.files import parent_path
 
 def test_find_in_file():
     # Test finding a string in a file
-    file_path = '../find.py'
+    file_path = f'{parent_path(os.path.abspath(__file__))}{os.sep}resources/test1.txt'
     results = find_in_file('import', file_path)
     assert len(results) >= 1  # Should find at least one 'import' statement
 
@@ -19,7 +21,7 @@ def test_find_in_file():
 
 def test_find_numbers_in_file_by_length():
     # Test finding 3-digit numbers in a file
-    file_path = '../find.py'
+    file_path = f'{parent_path(os.path.abspath(__file__))}{os.sep}resources/test1.txt'
     results = find_numbers_in_file_by_length(3, file_path)
     assert len(results) >= 1  # Should find at least one 3-digit numbers
 

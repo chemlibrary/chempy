@@ -1,6 +1,6 @@
 import pytest
 
-from ..primitives import (
+from chempy.primitives import (
     sign, verify, sha256_hash, sanitize, num_digits, leading_zeros,
     pack, unpack, split_escaped, get_word_after
 )
