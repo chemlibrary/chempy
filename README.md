@@ -1,4 +1,8 @@
 # ChemPy by Chem
+## Quick Install
+```
+pip install chemlibrary-chempy
+```
 ## Description
 ChemPy is a python framework for developers that is human readable and intuitive. It simplifies and accelerates development by providing highly functional, standardized building blocks so that you can focus on what makes your project unique. The classes and methods all follow a standardized convention, allowing you to spend less time reading documentation.
 ## Styling and Conventions
@@ -13,6 +17,3 @@ ChemPy is a python framework for developers that is human readable and intuitive
 ```
 |:|
 ```
-
-### Commits:
-Commits will list the changes made and to what file/object they are made if the commit is a finished product. For work-in-progress changes, the commit will be the date and commit number for that date in the format {YYYMMDD###}.
