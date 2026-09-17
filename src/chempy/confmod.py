@@ -15,6 +15,12 @@
 # You should have received a copy of the GNU General Public License
 # along with ChemPy. If not, see <http://www.gnu.org/licenses/>.
 
+"""
+This script provides an easy and safe way to modify linux configuration files in shell scripts.
+
+Usage:
+python3 -m chempy.confmod <file> <old_line> <new_line>
+"""
 import argparse
 import os
 import shutil
@@ -45,14 +51,14 @@ def replace_line(
     if not path.is_file():
         raise FileNotFoundError(f"File does not exist: {filename}")
 
-    # Get original file metadata BEFORE modifying it.
+    ## Get original file metadata BEFORE modifying it.
     original_stat = os.stat(path, follow_symlinks=False)
 
     original_uid = original_stat.st_uid
     original_gid = original_stat.st_gid
     original_mode = stat.S_IMODE(original_stat.st_mode)
 
-    # Read the file while preserving line endings.
+    ## Read the file while preserving line endings.
     with open(path, "r", encoding="utf-8", newline="") as f:
         lines = f.readlines()
 
@@ -60,12 +66,12 @@ def replace_line(
     new_lines = []
 
     for line in lines:
-        # Compare without the line ending so the caller doesn't
-        # need to include \n in old_line.
+        ## Compare without the line ending so the caller doesn't
+        ## need to include \n in old_line.
         content = line.rstrip("\r\n")
 
         if content == old_line and (replace_all or replacements == 0):
-            # Preserve the original line ending.
+            ## Preserve the original line ending.
             if line.endswith("\r\n"):
                 ending = "\r\n"
             elif line.endswith("\n"):
@@ -83,15 +89,14 @@ def replace_line(
     if replacements == 0:
         return 0
 
-    # Create a backup before modifying the original.
+    ## Create a backup before modifying the original.
     if backup:
         backup_path = Path(str(path) + ".bak")
         shutil.copy2(path, backup_path)
 
-    # Write to a temporary file in the SAME directory.
-    #
-    # This is important because os.replace() is atomic when the
-    # source and destination are on the same filesystem.
+    ## Write to a temporary file in the same directory.
+    ## This is important because os.replace() is atomic when the
+    ## source and destination are on the same filesystem.
     fd, temp_name = tempfile.mkstemp(
         prefix=f".{path.name}.",
         dir=str(path.parent),
@@ -104,18 +109,17 @@ def replace_line(
             temp_file.flush()
             os.fsync(temp_file.fileno())
 
-        # Restore the original ownership and permissions on the
-        # temporary file BEFORE replacing the original.
+        ## Restore the original ownership and permissions on the
+        ## temporary file before replacing the original.
         os.chown(temp_name, original_uid, original_gid)
         os.chmod(temp_name, original_mode)
 
-        # Atomically replace the original file.
+        ## Atomically replace the original file.
         os.replace(temp_name, path)
 
-        # Best effort: preserve SELinux security context if the
-        # system provides the appropriate utilities.
-        #
-        # restorecon will restore the expected context for the path.
+        ## Best effort: preserve SELinux security context if the
+        ## system provides the appropriate utilities.
+        ## restorecon will restore the expected context for the path.
         restorecon = shutil.which("restorecon")
         if restorecon:
             import subprocess
@@ -130,7 +134,7 @@ def replace_line(
         return replacements
 
     except Exception:
-        # Clean up the temporary file if anything went wrong.
+        ## Clean up the temporary file if anything went wrong.
         try:
             os.unlink(temp_name)
         except FileNotFoundError:
