@@ -11,6 +11,7 @@ src/chempy/bash.py
 src/chempy/cli.py
 src/chempy/cloak.py
 src/chempy/clock.py
+src/chempy/conf.py
 src/chempy/confmod.py
 src/chempy/files.py
 src/chempy/find.py

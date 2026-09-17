@@ -15,7 +15,7 @@
 # along with ChemPy. If not, see <http://www.gnu.org/licenses/>.
 
 
-def parse_conf_file(path):
+def read_conf(path):
     """
     Parse a simple Linux .conf file into a dictionary.
     """
@@ -37,6 +37,3 @@ def parse_conf_file(path):
             config[key.strip()] = value.strip()
 
     return config
-
-if __name__ == '__main__':
-    print(parse_conf_file('/home/user/Desktop/test/test.conf'))

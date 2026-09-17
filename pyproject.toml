@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "chemlibrary-chempy"
-version = "2.1.7"
+version = "2.2.0"
 authors = [
   { name="Chem", email="codechem@proton.me" },
 ]
