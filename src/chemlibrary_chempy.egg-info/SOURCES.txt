@@ -16,6 +16,7 @@ src/chempy/confmod.py
 src/chempy/files.py
 src/chempy/find.py
 src/chempy/get_default_args.py
+src/chempy/librarian.py
 src/chempy/lists.py
 src/chempy/plot.py
 src/chempy/primitives.py
@@ -26,4 +27,5 @@ src/chempy/watchdog.py
 src/chempy/wifinetwork.py
 tests/test_files.py
 tests/test_find.py
+tests/test_librarian.py
 tests/test_primitives.py
