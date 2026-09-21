@@ -13,12 +13,16 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with ChemPy. If not, see <http://www.gnu.org/licenses/>.
+from chempy.files import file_exists
 
 
 def read_conf(path):
     """
     Parse a simple Linux .conf file into a dictionary.
     """
+    if not file_exists(path):
+        return None
+
     config = {}
 
     with open(path, "r", encoding="utf-8") as f:
