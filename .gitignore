@@ -1,9 +1,8 @@
 **/media/*
 **/db.sqlite3
 **/__pycache__
-**/migrations/*
+**/migrations
 **/chemlibrary_chempy.egg-info
-/chemlibrary_chempy.egg-info
 **/.pytest_cache
-/build
+**/build
 
