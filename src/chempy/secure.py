@@ -14,26 +14,30 @@
 # You should have received a copy of the GNU General Public License
 # along with ChemPy. If not, see <http://www.gnu.org/licenses/>.
 
+
 # Encryption and Obfuscation
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives import padding
 import base64
 import secrets
-from chempy.rdm import random_number
-
 import threading
-
+from pgpy.constants import PubKeyAlgorithm, KeyFlags, HashAlgorithm, SymmetricKeyAlgorithm
+from pgpy import PGPKey, PGPUID
+from chempy.rdm import random_number
 
 
 def generate_aes_key(key_size:int = 256) -> bytes:
     ## Generate secure keys for AES
     if key_size == 128:
-        return secrets.token_bytes(16)  # 16 bytes for AES-128
+        ## 16 bytes for AES-128
+        return secrets.token_bytes(16)
     elif key_size == 192:
-        return secrets.token_bytes(24)  # 24 bytes for AES-192
+        ## 24 bytes for AES-192
+        return secrets.token_bytes(24)
     elif key_size == 256:
-        return secrets.token_bytes(32)  # 32 bytes for AES-256
+        ## 32 bytes for AES-256
+        return secrets.token_bytes(32)
     else:
         raise ValueError('The key size must be 128, 192, or 256')
 
@@ -92,23 +96,17 @@ def asym_alpha_to_numeric(input:str) -> str:
     return ''.join(output)
 
 
-def __entropy(itertions:int = 1000000):
-    entropy = 'entropy'
-    for i in range(itertions):
-        entropy = f'{random_number()}'
-    print(entropy)
-
-
-def generate_pgp_key(
+def generate_pgp_keypair(
         name:str = 'User',
         comment:str = 'None',
         email:str = 'email@example.com',
-        password:str = None):
-    from pgpy.constants import PubKeyAlgorithm, KeyFlags, HashAlgorithm, SymmetricKeyAlgorithm
-    from pgpy import PGPKey, PGPUID
-
+        password:str = None) -> tuple[str, str]:
 
     ## Attempt to increase entropy by generating random numbers during key creation
+    def __entropy(itertions:int = 1000000):
+        tmp_str = ''
+        for i in range(itertions):
+            tmp_str = f'{random_number()}'
     entropy_thread  = threading.Thread(target=__entropy)
     entropy_thread.start()
 
@@ -128,21 +126,48 @@ def generate_pgp_key(
     return (private_key, public_key)
 
 
-    """
-    # Unlocking the key when needed
-    with key.unlock("your_passphrase_here"):
-        # Perform operations with the unlocked key
-        pass
-    """
-    ###def load_key():
-        # Load a key from a file
-    #key, _ = pgpy.PGPKey.from_file('path/to/key.asc')
-
-    # Load a key from a string
-    #key, _ = pgpy.PGPKey.from_blob(keyblob)
+def load_key(path:str) -> PGPKey:
+    key, _ = PGPKey.from_file(path)
+    return key
 
 
-if __name__ == '__main__':
-    private_key, public_key = generate_pgp_key()
-    print(private_key)
-    print(public_key)
+def string_to_pgpkey(key_str:str) -> PGPKey:
+    key, _ = PGPKey.from_blob(key_str)
+    return key
+
+
+def generate_password(
+        length:int = 16,
+        use_lowercase:bool = True,
+        use_uppercase:bool = True,
+        use_numbers:bool = True,
+        use_symbols:bool = False,
+        charset:str = None) -> str:
+    lowercase = list('abcdefghijklmnopqrstuvwxyz')
+    uppercase = list('ABCDEFGHIJKLMNOPQRSTUVWXYZ')
+    numbers = list('0123456789')
+    symbols = list(r'!@#$%^&*()_+-=,.<>/?;:\'"[]{}|`~')
+    #print(symbols)
+    if charset != None:
+        options = list(charset)
+    else:
+        options = []
+        if use_lowercase:
+            options.extend(lowercase)
+        if use_uppercase:
+            options.extend(uppercase)
+        if use_numbers:
+            options.extend(numbers)
+        if use_symbols:
+            options.extend(symbols)
+    max_option = (len(options) - 1)
+    #print(options)
+    #print(max_option)
+    if max_option == -1:
+        return 'password'
+    output = []
+    for i in range(length):
+        output.append(options[random_number(max_number=max_option)])
+    #print(output)
+    output = ''.join(output)
+    return output

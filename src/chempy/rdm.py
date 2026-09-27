@@ -20,5 +20,18 @@ def random_number(min_number:int = 0, max_number:int = 100):
     return secrets.randbelow((max_number + 1) - min_number) + min_number
 
 
-if __name__ == '__main__':
-    for i in range(100):print(random_number(max_number=2))
+def dice(rolls:int = 1, dice_type:str = None, dice_sides:int = 6, number_of_realities:int = 6) -> list[int]:
+    if dice_type != None:
+        dice_type = str(dice_type)
+        if dice_type[0] == 'd':
+            dice_type = dice_type[1:]
+        if dice_type.isnumeric():
+            dice_sides = int(dice_type)
+    results = []
+    for i in range(rolls):
+        realities = []
+        for x in range(number_of_realities):
+            realities.append(random_number(min_number=1, max_number=dice_sides))
+        reality_number = random_number(max_number=(len(realities) - 1))
+        results.append(realities[reality_number])
+    return results  

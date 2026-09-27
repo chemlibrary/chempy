@@ -4,13 +4,13 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "chemlibrary-chempy"
-version = "2.4.1"
+version = "2.4.2"
 authors = [
   { name="Chem", email="codechem@proton.me" },
 ]
 description = "Chems Python Library."
 readme = "README.md"
-requires-python = ">=3.9"
+requires-python = ">=3.12.3"
 classifiers = [
     "Programming Language :: Python :: 3",
     "Operating System :: OS Independent",
