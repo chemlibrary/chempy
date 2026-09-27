@@ -20,6 +20,10 @@ from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives import padding
 import base64
 import secrets
+from chempy.rdm import random_number
+
+import threading
+
 
 
 def generate_aes_key(key_size:int = 256) -> bytes:
@@ -86,3 +90,59 @@ def asym_alpha_to_numeric(input:str) -> str:
         if not found:
             output.append('0')
     return ''.join(output)
+
+
+def __entropy(itertions:int = 1000000):
+    entropy = 'entropy'
+    for i in range(itertions):
+        entropy = f'{random_number()}'
+    print(entropy)
+
+
+def generate_pgp_key(
+        name:str = 'User',
+        comment:str = 'None',
+        email:str = 'email@example.com',
+        password:str = None):
+    from pgpy.constants import PubKeyAlgorithm, KeyFlags, HashAlgorithm, SymmetricKeyAlgorithm
+    from pgpy import PGPKey, PGPUID
+
+
+    ## Attempt to increase entropy by generating random numbers during key creation
+    entropy_thread  = threading.Thread(target=__entropy)
+    entropy_thread.start()
+
+    ## Generate PGP key object    
+    key = PGPKey.new(PubKeyAlgorithm.RSAEncryptOrSign, 4096)
+    uid = PGPUID.new(name, comment=comment, email=email)
+    key.add_uid(uid, usage={KeyFlags.Sign, KeyFlags.EncryptCommunications},
+            hashes=[HashAlgorithm.SHA256, HashAlgorithm.SHA512],
+            ciphers=[SymmetricKeyAlgorithm.AES256])
+
+    ## Password protect the private key
+    if password != None:
+        key.protect(password)
+
+    private_key = str(key)
+    public_key = str(key.pubkey)
+    return (private_key, public_key)
+
+
+    """
+    # Unlocking the key when needed
+    with key.unlock("your_passphrase_here"):
+        # Perform operations with the unlocked key
+        pass
+    """
+    ###def load_key():
+        # Load a key from a file
+    #key, _ = pgpy.PGPKey.from_file('path/to/key.asc')
+
+    # Load a key from a string
+    #key, _ = pgpy.PGPKey.from_blob(keyblob)
+
+
+if __name__ == '__main__':
+    private_key, public_key = generate_pgp_key()
+    print(private_key)
+    print(public_key)
