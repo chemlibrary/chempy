@@ -25,19 +25,22 @@ def read_conf(path):
 
     config = {}
 
-    with open(path, "r", encoding="utf-8") as f:
-        for line in f:
-            line = line.strip()
+    try:
+        with open(path, "r", encoding="utf-8") as f:
+            for line in f:
+                line = line.strip()
 
-            # Skip blank lines and comments
-            if not line or line.startswith("#"):
-                continue
+                # Skip blank lines and comments
+                if not line or line.startswith("#"):
+                    continue
 
-            # Only process lines containing '='
-            if "=" not in line:
-                continue
+                # Only process lines containing '='
+                if "=" not in line:
+                    continue
 
-            key, value = line.split("=", 1)
-            config[key.strip()] = value.strip()
+                key, value = line.split("=", 1)
+                config[key.strip()] = value.strip()
+    except:
+        raise
 
     return config

@@ -147,7 +147,6 @@ def generate_password(
     uppercase = list('ABCDEFGHIJKLMNOPQRSTUVWXYZ')
     numbers = list('0123456789')
     symbols = list(r'!@#$%^&*()_+-=,.<>/?;:\'"[]{}|`~')
-    #print(symbols)
     if charset != None:
         options = list(charset)
     else:
@@ -161,13 +160,10 @@ def generate_password(
         if use_symbols:
             options.extend(symbols)
     max_option = (len(options) - 1)
-    #print(options)
-    #print(max_option)
     if max_option == -1:
         return 'password'
     output = []
     for i in range(length):
         output.append(options[random_number(max_number=max_option)])
-    #print(output)
     output = ''.join(output)
     return output

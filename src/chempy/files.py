@@ -30,7 +30,6 @@ def clean_path(path:str) -> str:
         return absolute_path
     except:
         raise
-        return None
 
 
 
@@ -70,7 +69,6 @@ def file_read(path:str, hex:bool = False, fallback_hex:bool = True, fallback:boo
             return contents.hex()
         except:
             raise
-            return None
     try:
         with open(path, 'r') as file: contents = file.read()
         return contents
@@ -78,14 +76,15 @@ def file_read(path:str, hex:bool = False, fallback_hex:bool = True, fallback:boo
         if fallback: pass
         else:
             raise
-            return None
     try:
         with open(path, 'rb') as file: contents = file.read()
         if fallback_hex: contents = contents.hex()
         return contents
     except:
         raise
-        return None
+
+
+
 def file_read_lines(path:str) -> list[str]:
     try:
         contents = file_read(path)
@@ -94,7 +93,6 @@ def file_read_lines(path:str) -> list[str]:
         return contents.split('\n')
     except:
         raise
-        return None
 
 
 
@@ -105,7 +103,6 @@ def file_write(path:str, contents:str = '') -> bool:
         return True
     except:
         raise
-        return False
 
 
 
@@ -116,7 +113,6 @@ def file_append(path:str, contents:str = '') -> bool:
         return True
     except:
         raise
-        return False
 
 
 
@@ -137,7 +133,6 @@ def file_delete(path:str) -> bool:
         return True
     except:
         raise
-        return False
 
 
 
@@ -164,7 +159,6 @@ def file_safe_write(path:str, contents:str, encoding:str = 'utf-8'):
         return True
     except:
         raise
-        return False
 
 
 
@@ -178,7 +172,6 @@ def file_size(path:str) -> str:
             return size
     except:
         raise
-        return None
 
 
 
@@ -198,7 +191,6 @@ def dir_size(path:str = '.'):
         return size
     except:
         raise
-        return None
 
 
 
@@ -231,7 +223,7 @@ def file_name(path:str, include_extension:bool = True) -> str:
         return name
     except:
         raise
-        return None
+
 
 
 
@@ -244,7 +236,6 @@ def file_extension(path:str) -> str:
         return extension
     except:
         raise
-        return None
 
 
 
@@ -256,7 +247,6 @@ def file_name_hash(path: str) -> str:
         return hash.hexdigest()
     except:
         raise
-        return None
 
 
 
@@ -272,7 +262,6 @@ def file_hash(path:str, algorithm:str = 'sha256', chunk_size:int = 65536) -> str
         return hash.hexdigest()
     except:
         raise
-        return None
 
 
 
@@ -303,7 +292,6 @@ def dir_contents(path:str = '.', filenames_only:bool = False, recursive = False,
         return items
     except:
         raise
-        return None
 
 
 
@@ -317,7 +305,6 @@ def parent_path(path:str = '.') -> str:
         return parent_path
     except:
         raise
-        return None
 
 
 
@@ -333,7 +320,6 @@ def sanitize_filename(filename:str, replacement_char:str = '_') -> str:
         return sanitized.strip(' .')
     except:
         raise
-        return None
 
 
 
@@ -352,7 +338,6 @@ def sanitize_path(path:str, replacement_char:str = '') -> str:
         return absolute
     except:
         raise
-        return None
 
 
 
