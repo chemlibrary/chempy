@@ -16,8 +16,29 @@
 
 import math
 
-def points_in_circle(center, diameter):
-	radius = diameter/2
+class XYGrid:
+
+	def __init__(self, size_x:int = 100, size_y:int = 100):
+		self.size_x = size_x
+		self.size_y = size_y
+		self.grid = [[0 for _ in range(self.size_x)] for _ in range(self.size_y)]
+		
+		def set_value(self, x:int, y:int, value:int = None) -> bool:
+				self.grid[x][y] = value
+				if self.grid[x][y] == value: return True
+				return False
+
+		def get_grid(self):
+			return self.grid
+
+
+def is_point_in_circle(circle_center_x:int, circle_center_y:int, circle_radius:int, x:int, y:int) -> bool:
+    squared_distance = (circle_center_x - x) ** 2 + (circle_center_y - y) ** 2
+    radius_squared = circle_radius ** 2
+    return squared_distance <= radius_squared
+
+
+def points_in_circle(center, radius):
 	points = []
 
 	x_min = center[0] - radius

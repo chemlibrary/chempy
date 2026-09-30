@@ -15,11 +15,24 @@
 # along with ChemPy. If not, see <http://www.gnu.org/licenses/>.
 
 ## List functions for more readable source code
+
+from chempy.rdm import random_number
+
+
 def reverse_list(li):
     return li[::-1]
+
 
 def string_to_list(str):
     return list(str)
 
+
 def list_to_string(list):
     return ''.join(list)
+
+
+def shuffle_list(unshuffled:list):
+    shuffled = [None] * len(unshuffled)
+    for i in range(len(shuffled)):
+        shuffled[i] = unshuffled.pop(random_number(max_number = (len(unshuffled) - 1) ))
+    return shuffled

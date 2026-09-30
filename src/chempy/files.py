@@ -33,13 +33,13 @@ def clean_path(path:str) -> str:
 
 
 
-def is_child_of_dir(path:str, dir:str) -> bool:
+def is_child_of_dir(path:str, dir_path:str) -> bool:
     ## Determines if path is a child of dir or is dir.
 
     ## Normalize the target path:
     path = os.path.abspath(path)
     ## Normalize the directory path:
-    dir = os.path.abspath(dir)
+    dir = os.path.abspath(dir_path)
     ## Check if target_path starts with directory and ensure proper trailing slash handling:
     if path == dir or path.startswith(dir + os.sep) or path.startswith(dir + '/'):
         return True
