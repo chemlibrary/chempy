@@ -32,13 +32,13 @@ class XYGrid:
 			return self.grid
 
 
-def is_point_in_circle(circle_center_x:int, circle_center_y:int, circle_radius:int, x:int, y:int) -> bool:
+def point_in_circle(x:int, y:int, circle_radius:int, circle_center_x:int = 0, circle_center_y:int = 0) -> bool:
     squared_distance = (circle_center_x - x) ** 2 + (circle_center_y - y) ** 2
     radius_squared = circle_radius ** 2
     return squared_distance <= radius_squared
 
 
-def points_in_circle(center, radius):
+def get_points_in_circle(center, radius):
 	points = []
 
 	x_min = center[0] - radius

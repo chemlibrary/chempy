@@ -17,6 +17,7 @@
 ## List functions for more readable source code
 
 from chempy.rdm import random_number
+import random
 
 
 def reverse_list(li):
@@ -32,7 +33,7 @@ def list_to_string(list):
 
 
 def shuffle_list(unshuffled:list):
-    shuffled = [None] * len(unshuffled)
-    for i in range(len(shuffled)):
-        shuffled[i] = unshuffled.pop(random_number(max_number = (len(unshuffled) - 1) ))
+    random.seed(random_number(up_to=1000000000))
+    shuffled = unshuffled
+    random.shuffle(shuffled)
     return shuffled

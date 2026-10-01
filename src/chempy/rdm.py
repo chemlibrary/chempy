@@ -16,8 +16,12 @@
 
 import secrets
 
-def random_number(min_number:int = 0, max_number:int = 100):
-    return secrets.randbelow((max_number + 1) - min_number) + min_number
+def random_number(max_number:int = 100, min_number:int = 0, up_to:int = None):
+    if up_to == None:
+        max_number = max_number + 1
+    else:
+        max_number = up_to
+    return secrets.randbelow(max_number - min_number) + min_number
 
 
 def dice(rolls:int = 1, dice_type:str = None, dice_sides:int = 6, number_of_realities:int = 6) -> list[int]:
